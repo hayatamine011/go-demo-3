@@ -1,5 +1,5 @@
 import java.text.SimpleDateFormat
-
+@Library('liberary')
 def props
 def label = "jenkins-slave-${UUID.randomUUID().toString()}"
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-" + env.BUILD_NUMBER
