@@ -3,13 +3,13 @@ apiVersion: v1
 metadata:
   creationTimestamp: 2016-02-18T19:14:38Z
   name: build-config
-  namespace: go-demo-3-build
+  namespace: java-build
 data:
   build-config.properties: |
-    project=go-demo-3
+    project=java
     image=vfarcic/go-demo-3
     domain=acme.com
-    addr=go-demo-3.acme.com
+    addr=java.acme.com
     cmAddr=cm.acme.com
     chartVer=0.0.1
 
