@@ -6,7 +6,7 @@ currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) +
 
 podTemplate(
   label: label,
-  namespace: "go-demo-3-build", // Not allowed with declarative
+  namespace: "java-build", // Not allowed with declarative
   serviceAccount: "build",
   yaml: """
 apiVersion: v1
