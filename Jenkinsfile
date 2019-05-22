@@ -36,7 +36,7 @@ spec:
 ) {
   node(label) {
     //stage("build") {
-      container("helm") {
+     // container("helm") {
     //    sh "cp /etc/config/build-config.properties ."
   //      props = readProperties interpolate: true, file: "build-config.properties"
       //}
