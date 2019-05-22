@@ -25,7 +25,7 @@ spec:
 ) {
   node(label) {
     stage("build") {
-      container("docker") {
+      container("kubectl") {
         // sh "cp /etc/config/build-config.properties ."
        // props = readProperties interpolate: true, file: "build-config.properties"
       }
@@ -36,20 +36,20 @@ spec:
     }
     stage("func-test") {
       try {
-        container("docker") {
+        container("kubectl") {
          // checkout scm
           sh "echo k8sUpgradeBeta"
         }
         container("kubectl") {
            sh "echo k8sRolloutBeta"
         }
-        container("golang") {
+        container("kubectl") {
            sh "echo k8sFuncTestGolang"
         }
       } catch(e) {
           error "Failed functional tests"
       } finally {
-        container("docker") {
+        container("kubectl") {
            sh "echo k8sDeleteBeta"
         }
       }
@@ -59,23 +59,23 @@ spec:
         node(label) {
            sh "echo k8sPushImage"
         }
-        container("docker") {
+        container("kubectl") {
             sh "echo k8sPushHelm"
         }
       }
       stage("deploy") {
         try {
-          container("docker") {
+          container("kubectl") {
             sh "echo k8sRollback"
           }
           container("kubectl") {
             sh "echo k8sRollbac"
           }
-          container("golang") {
+          container("kubectl") {
             sh "echo k8sRollback"
           }
         } catch(e) {
-          container("docker") {
+          container("kubectl") {
             sh "echo k8sRollback"
           }
         }
