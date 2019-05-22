@@ -38,45 +38,45 @@ spec:
       try {
         container("docker") {
          // checkout scm
-          sh 'echo k8sUpgradeBeta(props.project, props.domain, "--set replicaCount=2 --set dbReplicaCount=1")'
+          sh "echo k8sUpgradeBeta"
         }
         container("kubectl") {
-           sh 'echo k8sRolloutBeta(props.project)'
+           sh "echo k8sRolloutBeta"
         }
         container("golang") {
-           sh 'echo k8sFuncTestGolang(props.project, props.domain)'
+           sh "echo k8sFuncTestGolang"
         }
       } catch(e) {
           error "Failed functional tests"
       } finally {
         container("docker") {
-           sh 'echo k8sDeleteBeta(props.project)'
+           sh "echo k8sDeleteBeta"
         }
       }
     }
     if ("${BRANCH_NAME}" == "master") {
       stage("release") {
         node(label) {
-           sh 'echo k8sPushImage(props.image)'
+           sh "echo k8sPushImage'
         }
         container("docker") {
-            sh 'echo k8sPushHelm(props.project, props.chartVer, props.cmAddr)'
+            sh "echo k8sPushHelm"
         }
       }
       stage("deploy") {
         try {
           container("docker") {
-            sh 'echo k8sRollback(props.project)'
+            sh "echo k8sRollback"
           }
           container("kubectl") {
-            sh 'echo k8sRollback(props.project)'
+            sh "echo k8sRollbac"
           }
           container("golang") {
-            sh 'echo k8sRollback(props.project)'
+            sh "echo k8sRollback"
           }
         } catch(e) {
           container("docker") {
-            sh 'echo k8sRollback(props.project)'
+            sh "echo k8sRollback"
           }
         }
       }
