@@ -30,14 +30,14 @@ spec:
        // props = readProperties interpolate: true, file: "build-config.properties"
       }
       node(label) { // Not allowed with declarative
-        checkout scm
+       // checkout scm
          sh 'echo k8sBuildImageBeta(props.image)'
       }
     }
     stage("func-test") {
       try {
         container("docker") {
-          checkout scm
+         // checkout scm
           sh 'echo k8sUpgradeBeta(props.project, props.domain, "--set replicaCount=2 --set dbReplicaCount=1")'
         }
         container("kubectl") {
@@ -56,7 +56,7 @@ spec:
     }
     if ("${BRANCH_NAME}" == "master") {
       stage("release") {
-        node("docker") {
+        node(label) {
            sh 'echo k8sPushImage(props.image)'
         }
         container("docker") {
