@@ -13,13 +13,6 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: helm
-    image: vfarcic/helm:2.9.1
-    command: ["cat"]
-    tty: true
-    volumeMounts:
-    - name: build-config
-      mountPath: /etc/config
   - name: kubectl
     image: vfarcic/kubectl
     command: ["cat"]
@@ -28,11 +21,7 @@ spec:
     image: golang:1.9
     command: ["cat"]
     tty: true
-  volumes:
-  - name: build-config
-    configMap:
-      name: build-config
-"""
+ """
 ) {
   node(label) {
     stage("build") {
