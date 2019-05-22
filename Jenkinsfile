@@ -35,11 +35,11 @@ spec:
 """
 ) {
   node(label) {
-    //stage("build") {
-     // container("helm") {
-    //    sh "cp /etc/config/build-config.properties ."
-  //      props = readProperties interpolate: true, file: "build-config.properties"
-      //}
+    stage("build") {
+      container("docker") {
+        // sh "cp /etc/config/build-config.properties ."
+       // props = readProperties interpolate: true, file: "build-config.properties"
+      }
       node("docker") { // Not allowed with declarative
         checkout scm
          sh 'echo k8sBuildImageBeta(props.image)'
