@@ -57,7 +57,7 @@ spec:
     if ("${BRANCH_NAME}" == "master") {
       stage("release") {
         node(label) {
-           sh "echo k8sPushImage'
+           sh "echo k8sPushImage"
         }
         container("docker") {
             sh "echo k8sPushHelm"
