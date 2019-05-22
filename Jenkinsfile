@@ -31,7 +31,7 @@ spec:
       }
       node(label) { // Not allowed with declarative
        // checkout scm
-         sh 'echo k8sBuildImageBeta(props.image)'
+         sh "echo k8sBuildImageBeta"
       }
     }
     stage("func-test") {
