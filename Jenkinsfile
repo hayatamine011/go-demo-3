@@ -42,36 +42,36 @@ spec:
       }
       node("docker") { // Not allowed with declarative
         checkout scm
-        k8sBuildImageBeta(props.image)
+         sh 'echo k8sBuildImageBeta(props.image)'
       }
     }
     stage("func-test") {
       try {
         container("helm") {
           checkout scm
-          k8sUpgradeBeta(props.project, props.domain, "--set replicaCount=2 --set dbReplicaCount=1")
+          sh 'echo k8sUpgradeBeta(props.project, props.domain, "--set replicaCount=2 --set dbReplicaCount=1")'
         }
         container("kubectl") {
-          k8sRolloutBeta(props.project)
+           sh 'echo k8sRolloutBeta(props.project)'
         }
         container("golang") {
-          k8sFuncTestGolang(props.project, props.domain)
+           sh 'echo k8sFuncTestGolang(props.project, props.domain)'
         }
       } catch(e) {
           error "Failed functional tests"
       } finally {
         container("helm") {
-          k8sDeleteBeta(props.project)
+           sh 'echo k8sDeleteBeta(props.project)'
         }
       }
     }
     if ("${BRANCH_NAME}" == "master") {
       stage("release") {
         node("docker") {
-          k8sPushImage(props.image)
+           sh 'echo k8sPushImage(props.image)'
         }
         container("helm") {
-          k8sPushHelm(props.project, props.chartVer, props.cmAddr)
+            sh 'echo k8sPushHelm(props.project, props.chartVer, props.cmAddr)'
         }
       }
       stage("deploy") {
