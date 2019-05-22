@@ -1,5 +1,5 @@
 import java.text.SimpleDateFormat
-@Library('liberary')
+//@Library('liberary')
 def props
 def label = "jenkins-slave-${UUID.randomUUID().toString()}"
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-" + env.BUILD_NUMBER
@@ -35,11 +35,11 @@ spec:
 """
 ) {
   node(label) {
-    stage("build") {
+    //stage("build") {
       container("helm") {
-        sh "cp /etc/config/build-config.properties ."
-        props = readProperties interpolate: true, file: "build-config.properties"
-      }
+    //    sh "cp /etc/config/build-config.properties ."
+  //      props = readProperties interpolate: true, file: "build-config.properties"
+      //}
       node("docker") { // Not allowed with declarative
         checkout scm
          sh 'echo k8sBuildImageBeta(props.image)'
@@ -47,7 +47,7 @@ spec:
     }
     stage("func-test") {
       try {
-        container("helm") {
+        container("docker") {
           checkout scm
           sh 'echo k8sUpgradeBeta(props.project, props.domain, "--set replicaCount=2 --set dbReplicaCount=1")'
         }
@@ -60,7 +60,7 @@ spec:
       } catch(e) {
           error "Failed functional tests"
       } finally {
-        container("helm") {
+        container("docker") {
            sh 'echo k8sDeleteBeta(props.project)'
         }
       }
@@ -70,24 +70,24 @@ spec:
         node("docker") {
            sh 'echo k8sPushImage(props.image)'
         }
-        container("helm") {
+        container("docker") {
             sh 'echo k8sPushHelm(props.project, props.chartVer, props.cmAddr)'
         }
       }
       stage("deploy") {
         try {
-          container("helm") {
-            k8sUpgrade(props.project, props.addr)
+          container("docker") {
+            sh 'echo k8sRollback(props.project)'
           }
           container("kubectl") {
-            k8sRollout(props.project)
+            sh 'echo k8sRollback(props.project)'
           }
           container("golang") {
-            k8sProdTestGolang(props.addr)
+            sh 'echo k8sRollback(props.project)'
           }
         } catch(e) {
-          container("helm") {
-            k8sRollback(props.project)
+          container("docker") {
+            sh 'echo k8sRollback(props.project)'
           }
         }
       }
