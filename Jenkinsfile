@@ -32,7 +32,8 @@ spec:
       node("cen") { // Not allowed with declarative
        // checkout scm
          sh "echo k8sBuildImageBeta"
-      }
+         sh "whoami"
+      }  sh "docker info"
     }
     stage("func-test") {
       try {
