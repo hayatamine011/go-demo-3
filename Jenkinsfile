@@ -29,7 +29,7 @@ spec:
         // sh "cp /etc/config/build-config.properties ."
        // props = readProperties interpolate: true, file: "build-config.properties"
       }
-      node(label) { // Not allowed with declarative
+      node("cen") { // Not allowed with declarative
        // checkout scm
          sh "echo k8sBuildImageBeta"
       }
