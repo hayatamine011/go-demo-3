@@ -33,7 +33,7 @@ spec:
        // checkout scm
          sh "echo k8sBuildImageBeta"
          sh "whoami"
-      }  sh " docker info"
+      }  sh " docker version"
     }
     stage("func-test") {
       try {
