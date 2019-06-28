@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+spec:
+  rules:
+  - host: jenkins.192.168.187.nip.io
+    http:
+      paths:
+      - backend:
+          serviceName: java-jenkins
+          servicePort: 8080
